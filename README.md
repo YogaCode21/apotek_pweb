@@ -1,2 +1,4 @@
 # Apotek-Pweb
-http://apotek-pweb.infinityfreeapp.com/login.php
+[Live Site](apotek-pweb.infinityfreeapp.com)
+Username : admin
+Password : admin
