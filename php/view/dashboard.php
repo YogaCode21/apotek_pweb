@@ -20,6 +20,9 @@
         case "proses_update_pelanggan":
             include_once "../update/proses_update_pelanggan.php";
         break;
+        case "tambah_transaksi":
+            include_once "../tambah/tambah_transaksi.php";
+        break;
     }
     include_once "../template/footer.php";
 ?>

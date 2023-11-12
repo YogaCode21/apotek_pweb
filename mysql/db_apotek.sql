@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 30, 2023 at 03:57 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Host: localhost:3306
+-- Generation Time: Nov 11, 2023 at 11:08 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tb_detail_transaksi` (
-  `iddetailtransaksi` int(4) NOT NULL,
-  `idtransaksi` int(5) NOT NULL,
-  `idobat` int(4) NOT NULL,
-  `jumlah` int(3) NOT NULL,
+  `iddetailtransaksi` int NOT NULL,
+  `idtransaksi` int NOT NULL,
+  `idobat` int NOT NULL,
+  `jumlah` int NOT NULL,
   `hargasatuan` double NOT NULL,
   `totalharga` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -43,11 +43,11 @@ CREATE TABLE `tb_detail_transaksi` (
 --
 
 CREATE TABLE `tb_karyawan` (
-  `idkaryawan` int(4) NOT NULL,
+  `idkaryawan` int NOT NULL,
   `namakaryawan` varchar(50) NOT NULL,
   `alamat` varchar(100) NOT NULL,
   `telp` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `tb_karyawan`
@@ -68,8 +68,17 @@ CREATE TABLE `tb_login` (
   `username` varchar(50) NOT NULL,
   `password` varchar(65) NOT NULL,
   `leveluser` varchar(50) NOT NULL,
-  `idkaryawan` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `idkaryawan` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `tb_login`
+--
+
+INSERT INTO `tb_login` (`username`, `password`, `leveluser`, `idkaryawan`) VALUES
+('ada', '$2y$10$APhFbGyAFhQUkeyJDTFyVu7w.8ACjvtOIi.WoaHEi6zSHrBa.OXHy', 'admin', 9),
+('admin', '$2y$10$Q9SQLM9FBjx7RSx35zFxN.C0pbAR350t1Qv2CHvXRLpT7hDcw46ry', 'admin', 10),
+('karyawan', '$2y$10$r9tbpghIBxpD73DBQOe4TOk.WMn2vUELjOJFb7S5ztItOGuvFkY0u', 'karyawan', 11);
 
 -- --------------------------------------------------------
 
@@ -78,15 +87,15 @@ CREATE TABLE `tb_login` (
 --
 
 CREATE TABLE `tb_obat` (
-  `idobat` int(4) NOT NULL,
-  `idsupplier` int(4) NOT NULL,
+  `idobat` int NOT NULL,
+  `idsupplier` int NOT NULL,
   `namaobat` varchar(100) NOT NULL,
   `kategoriobat` varchar(50) NOT NULL,
   `hargajual` double NOT NULL,
   `hargabeli` double NOT NULL,
-  `stok_obat` int(11) NOT NULL,
+  `stok_obat` int NOT NULL,
   `keterangan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `tb_obat`
@@ -94,7 +103,8 @@ CREATE TABLE `tb_obat` (
 
 INSERT INTO `tb_obat` (`idobat`, `idsupplier`, `namaobat`, `kategoriobat`, `hargajual`, `hargabeli`, `stok_obat`, `keterangan`) VALUES
 (13, 3, 'contoh', 'contoh', 0, 0, 100, 'contoh'),
-(14, 2, 'contoh', 'kategori', 20000, 15000, 5000, 'tidak ada');
+(14, 2, 'contoh', 'kategori', 20000, 15000, 5000, 'tidak ada'),
+(17, 2, 'banyak', 'banyak', 1, 1, 1, 'ADA');
 
 -- --------------------------------------------------------
 
@@ -103,13 +113,20 @@ INSERT INTO `tb_obat` (`idobat`, `idsupplier`, `namaobat`, `kategoriobat`, `harg
 --
 
 CREATE TABLE `tb_pelanggan` (
-  `idpelanggan` int(4) NOT NULL,
+  `idpelanggan` int NOT NULL,
   `namalengkap` varchar(50) NOT NULL,
   `alamat` varchar(100) NOT NULL,
-  `telp` int(15) NOT NULL,
-  `usia` int(3) NOT NULL,
+  `telp` int NOT NULL,
+  `usia` int NOT NULL,
   `buktifotoresep` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `tb_pelanggan`
+--
+
+INSERT INTO `tb_pelanggan` (`idpelanggan`, `namalengkap`, `alamat`, `telp`, `usia`, `buktifotoresep`) VALUES
+(1, 'ada', 'ada', 212121, 21, '');
 
 -- --------------------------------------------------------
 
@@ -118,12 +135,12 @@ CREATE TABLE `tb_pelanggan` (
 --
 
 CREATE TABLE `tb_supplier` (
-  `idsupplier` int(4) NOT NULL,
+  `idsupplier` int NOT NULL,
   `perusahaan` varchar(100) NOT NULL,
   `telp` varchar(20) NOT NULL,
   `alamat` text NOT NULL,
   `keterangan` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `tb_supplier`
@@ -143,15 +160,15 @@ INSERT INTO `tb_supplier` (`idsupplier`, `perusahaan`, `telp`, `alamat`, `ketera
 --
 
 CREATE TABLE `tb_transaksi` (
-  `idtransaksi` int(5) NOT NULL,
-  `idpelanggan` int(4) NOT NULL,
-  `idkaryawan` int(4) NOT NULL,
+  `idtransaksi` int NOT NULL,
+  `idpelanggan` int NOT NULL,
+  `idkaryawan` int NOT NULL,
   `tgltransaksi` date NOT NULL,
   `kategoripelanggan` varchar(20) NOT NULL,
   `totalbayar` double NOT NULL,
   `bayar` double NOT NULL,
   `kembali` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Indexes for dumped tables
@@ -213,37 +230,37 @@ ALTER TABLE `tb_transaksi`
 -- AUTO_INCREMENT for table `tb_detail_transaksi`
 --
 ALTER TABLE `tb_detail_transaksi`
-  MODIFY `iddetailtransaksi` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `iddetailtransaksi` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
-  MODIFY `idkaryawan` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idkaryawan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_obat`
 --
 ALTER TABLE `tb_obat`
-  MODIFY `idobat` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idobat` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tb_pelanggan`
 --
 ALTER TABLE `tb_pelanggan`
-  MODIFY `idpelanggan` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `idpelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_supplier`
 --
 ALTER TABLE `tb_supplier`
-  MODIFY `idsupplier` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idsupplier` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `idtransaksi` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtransaksi` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
