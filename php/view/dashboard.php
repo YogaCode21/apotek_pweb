@@ -23,6 +23,9 @@
         case "tambah_transaksi":
             include_once "../tambah/tambah_transaksi.php";
         break;
+        case "proses_tambah_transaksi":
+            include_once "../tambah/proses_tambah_transaksi.php";
+        break;
     }
     include_once "../template/footer.php";
 ?>
